@@ -103,50 +103,6 @@ cssFiles(); ?>
     <?php jsFiles();
     ?>
     <script>
-        function ValidateFormFieldsNew() {
-            var err = 0;
-            $('.err_msg').html('');
-            $(".mandatory").filter(function () {
-                var name = $(this).attr('name');
-                if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio" || $(this).prop("type") == "select-one" || $(this).prop("type") == "select") {
-                    if ($(this).val() == '') {
-                        err++;
-                        $(this).after("<span class='err_msg text-danger'  style='margin-top:5px;font-size: 13px;'>Please Select " + name + "</span>");
-                        return $(this).val().trim() == "" || !this.checked;
-                    }
-                } else {
-                    var minLength = $(this).prop("minlength");
-                    if (minLength > $(this).val().length) {
-                        err++;
-                        $(this).after("<span class='err_msg'  style='margin-top:5px;color: #f08f1c;font-size: 13px;'>You can't write less than " + minLength + " chacters</span>");
-                    }
-                    if ($(this).prop("type") == "text" || $(this).prop("type") == "textarea" || $(this).prop("type") == "password" || $(this).prop("type") == "date") {
-                        if ($(this).val() == '') {
-                            err++;
-                            $(this).after("<span class='err_msg text-danger'  style='margin-top:5px;font-size: 13px;'>Please Enter " + name + "</span>");
-                        }
-                    } else if ($(this).prop("type") == "email") {
-                        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-                        if ($(this).val() == '') {
-                            err++;
-                            $(this).after("<span class='err_msg text-danger'  style='font-size: 13px;'>Please fill this field</span>");
-                        } else if (!emailReg.test($(this).val())) {
-                            err++;
-                            $(this).after("<span class='err_msg text-danger'  style='margin-top:5px;margin-left: 5px;font-size: 13px;'>Please Enter Valid email</span>");
-                        }
-                    }
-                    return $(this).prop('id');
-                    // return this.value.trim() == "";
-                }
-
-            }).first().focus();
-            if (err > 0) {
-                return "1";
-
-            } else {
-                return "0";
-            }
-        }
         $('.menu-item-home').addClass('current_page_item');
     </script>
 </body>
