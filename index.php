@@ -71,24 +71,21 @@ cssFiles(); ?>
                             <img src="<?php echo SECURE_PATH ?>assets/upload/slide4.jpg" class="d-block w-100"
                                  alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5 class="text-white">First slide label</h5>
-                                <p class="text-white">Some representative placeholder content for the first slide.</p>
+                                <h3 class="text-warning">Our mission is to share our family’s authentic Pizza recipes with the world.</h3>
                             </div>
                         </div>
                         <div class="carousel-item">
                             <img src="<?php echo SECURE_PATH ?>assets/upload/bg-pizza.jpg" class="d-block w-100"
                                  alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5 class="text-white">Second slide label</h5>
-                                <p class="text-white">Some representative placeholder content for the first slide.</p>
+                                <h3 class="text-primary">Our mission is to WOW people every day!</h3>
                             </div>
                         </div>
                         <div class="carousel-item">
                             <img src="<?php echo SECURE_PATH ?>assets/upload/slide5.jpg" class="d-block w-100"
                                  alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5 class="text-white">Third slide label</h5>
-                                <p class="text-white">Some representative placeholder content for the first slide.</p>
+                                <h3 class="text-info">Quality. Passion. Pride.</h3>
                             </div>
                         </div>
                     </div>
