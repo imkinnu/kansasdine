@@ -223,7 +223,7 @@ if (isset($_POST['updateCart'])) {
         } else {
             //check whether this item is aleady exists in the cart
             if ($_POST['category'] == 1) {
-                $check = $database->connection->prepare("select quantity from cart where user_id=:user_id and category=:category and item_name=:item_name");
+                $check = $database->connection->prepare("select id,quantity from cart where user_id=:user_id and category=:category and item_name=:item_name and id not in (select cartid from orders)");
                 $check->execute(array('user_id' => $_SESSION['userid'], 'category' => 1, 'item_name' => $_POST['itemname']));
                 if ($check->rowCount() > 0) {
                     $getQuantity = $check->fetch(PDO::FETCH_ASSOC);
@@ -232,7 +232,7 @@ if (isset($_POST['updateCart'])) {
                     $cart_array['price'] = $_POST['quantity'] * $price;
                 }
             } else {
-                $check = $database->connection->prepare("select quantity from cart where user_id=:user_id and category=:category and item_name=:item_name");
+                $check = $database->connection->prepare("select id,quantity from cart where user_id=:user_id and category=:category and item_name=:item_name and id not in (select cartid from orders)");
                 $check->execute(array('user_id' => $_SESSION['userid'], 'category' => $_POST['category'], 'item_name' => $_POST['itemname']));
                 if ($check->rowCount() > 0) {
                     $getQuantity = $check->fetch(PDO::FETCH_ASSOC);
@@ -243,8 +243,6 @@ if (isset($_POST['updateCart'])) {
             }
 
             $updCart = $database->connection->prepare("insert into cart values (NULL,:user_id,:category,:item_name,:size,:crust,:sauce,:cheese,:quantity,:price,:timestamp ) ON DUPLICATE KEY UPDATE size=:size,crust=:crust,sauce=:sauce,cheese=:cheese,quantity=:quantity,price=:price,timestamp=:timestamp");
-            echo "insert into cart values (NULL,:user_id,:category,:item_name,:size,:crust,:sauce,:cheese,:quantity,:price,:timestamp ) ON DUPLICATE KEY UPDATE size=:size,crust=:crust,sauce=:sauce,cheese=:cheese,quantity=:quantity,price=:price,timestamp=:timestamp";
-            print_r($cart_array);
             $updCart->execute($cart_array);
         }
     }
@@ -414,7 +412,7 @@ if (isset($_POST['orderItem'])) {
             $invoice_no .= sprintf('%04d', $getMax['max'] + 1);
             while ($getCartDetails = $getCartDet->fetch(PDO::FETCH_ASSOC)) {
                 $insOrders = $database->connection->prepare("insert into orders values (NULL,:user_id,:cartid,:payment_info,:invoice_no,:timestamp)");
-                $insOrders->execute(array('user_id' => $_POST['user_id'], 'cartid' => $getCartDetails['id'], 'payment_info' => serialize($payment_info), 'invoice_no' => $invoice_no, 'timestamp' => time()));
+                $insOrders->execute(array('user_id' => $_POST['user_id'], 'cartid' => $getCartDetails['id'], 'payment_info' => md5(serialize($payment_info)), 'invoice_no' => $invoice_no, 'timestamp' => time()));
             }
             if ($insOrders) {
                 echo "<script>$('#staticBackdrop').modal('hide');alert('Order Placed Successfully');location.reload()</script>";
@@ -433,7 +431,7 @@ if (isset($_POST['orderItem'])) {
         $invoice_no .= sprintf('%04d', $getMax['max'] + 1);
         while ($getCartDetails = $getCartDet->fetch(PDO::FETCH_ASSOC)) {
             $insOrders = $database->connection->prepare("insert into orders values (NULL,:user_id,:cartid,:payment_info,:invoice_no,:timestamp)");
-            $insOrders->execute(array('user_id' => $_POST['user_id'], 'cartid' => $getCartDetails['id'], 'payment_info'=>$_POST['data'],'invoice_no' => $invoice_no, 'timestamp' => time()));
+            $insOrders->execute(array('user_id' => $_POST['user_id'], 'cartid' => $getCartDetails['id'], 'payment_info'=>md5($_POST['data']),'invoice_no' => $invoice_no, 'timestamp' => time()));
         }
     }
 }
