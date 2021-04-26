@@ -27,33 +27,30 @@ cssFiles(); ?>
                             <label for="username" class="form-label fw-bold">Username</label>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-12">
-                            <input type="text" class="form-control" id="username" value="" required autocomplete="off" aria-describedby="usernameerror">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div id="usernameerror" class="invalid-feedback">
-                                Please Enter username.
-                            </div>
+                            <input name="Username" type="text" class="form-control mandatory" id="username" value="" required autocomplete="off" aria-describedby="usernameerror">
                         </div>
                         <div class="col-lg-4 d-flex justify-content-center">
                             <label for="password" class="form-label fw-bold">Password</label>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-12">
-                            <input type="password" class="form-control" id="password" value="" required autocomplete="off" aria-describedby="passworderror" minlength="6">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div id="passworderror" class="invalid-feedback">
-                                Password Should be more than 6 characters
-                            </div>
+                            <input name="Password" type="password" class="form-control mandatory" id="password" value="" required autocomplete="off" aria-describedby="passworderror" minlength="6">
                         </div>
                         <div class="col-lg-12 d-flex justify-content-center">
-                            <button class="btn btn-outline-primary" type="button" onclick="setState('login_message','<?php echo SECURE_PATH ?>ajax/ajax.php','login=1&username='+$('#username').val()+'&password='+$('#password').val())">Login</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="login()">Login</button>
                         </div>
                         <button type="button" class="btn btn-link" onclick="setState('loginForm','<?php echo SECURE_PATH ?>ajax/ajax.php','registerUser=1')">Register</button>
                         <div class="col-lg-12 d-flex justify-content-center" id="login_message">
 
                         </div>
+                        <script>
+                            function login()
+                            {
+                                if(ValidateFormFieldsNew() == 0)
+                                {
+                                    setState('login_message','<?php echo SECURE_PATH ?>ajax/ajax.php','login=1&username='+$('#username').val()+'&password='+$('#password').val())
+                                }
+                            }
+                        </script>
                     </form>
                 </div>
             </div>
