@@ -7,7 +7,7 @@ include('./../include/database.php');
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <title>Kansas Dine</title>
-    <link rel="icon" href="<?php SECURE_PATH ?>assets/images/logo.png" type="image/gif" sizes="16x16">
+    <link rel="icon" href="<?php echo SECURE_PATH ?>assets/images/logo.png" type="image/gif" sizes="16x16">
 </head>
 <body>
 <?php echo

@@ -432,8 +432,8 @@ if (isset($_POST['orderItem'])) {
         $getMax = $getMa->fetch(PDO::FETCH_ASSOC);
         $invoice_no .= sprintf('%04d', $getMax['max'] + 1);
         while ($getCartDetails = $getCartDet->fetch(PDO::FETCH_ASSOC)) {
-            $insOrders = $database->connection->prepare("insert into orders values (NULL,:user_id,:cartid,:invoice_no,:timestamp)");
-            $insOrders->execute(array('user_id' => $_POST['user_id'], 'cartid' => $getCartDetails['id'], 'invoice_no' => $invoice_no, 'timestamp' => time()));
+            $insOrders = $database->connection->prepare("insert into orders values (NULL,:user_id,:cartid,:payment_info,:invoice_no,:timestamp)");
+            $insOrders->execute(array('user_id' => $_POST['user_id'], 'cartid' => $getCartDetails['id'], 'payment_info'=>$_POST['data'],'invoice_no' => $invoice_no, 'timestamp' => time()));
         }
     }
 }

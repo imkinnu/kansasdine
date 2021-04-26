@@ -35,7 +35,7 @@ function renderHeader()
             <a href="<?php echo SECURE_PATH ?>index.html" title="Kansas Dine"><img class="logoImage"
                                                                                    src="<?php echo SECURE_PATH ?>assets/images/logo.png"
                                                                                    alt="Kansas Dine"/><img
-                        class="logoImageRetina" src="<?php echo SECURE_PATH ?>assets/images/logo-retina.png"
+                        class="logoImageRetina" src="<?php echo SECURE_PATH ?>assets/images/logo.png"
                         alt="Kansas Dine"/></a>
             <div class="clear"></div>
         </div>
