@@ -1,4 +1,7 @@
 <?php
+//ijahskjfbas
+//aokdnalf aosd
+//asdlkasldjlsad
 include('./../include/session.php');
 include('./../include/database.php');
 //login
@@ -74,6 +77,7 @@ if (isset($_POST['loadPrice'])) {
         $database->throwCustomError($reason);
     }
 }
+//askdhkjaskdsad
 if (isset($_POST['loadBeveragesPrice'])) {
     $validated = true;
 
