@@ -1,6 +1,8 @@
 <?php
 include('./../include/session.php');
 include('./../include/database.php');
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 //login
 if (isset($_POST['login'])) {
     //remove special characters from input
@@ -242,8 +244,17 @@ if (isset($_POST['updateCart'])) {
                 }
             }
 
-            $updCart = $database->connection->prepare("insert into cart values (NULL,:user_id,:category,:item_name,:size,:crust,:sauce,:cheese,:quantity,:price,:timestamp ) ON DUPLICATE KEY UPDATE size=:size,crust=:crust,sauce=:sauce,cheese=:cheese,quantity=:quantity,price=:price,timestamp=:timestamp");
-            $updCart->execute($cart_array);
+            //check whether this item is already in cart
+            $checkIte = $database->connection->prepare("select id from cart where user_id=:user_id and item_name=:item_name and category=:category and id not in (select cartid from orders)");
+            $checkIte->execute(array('user_id'=>$_SESSION['userid'],'item_name'=>$_POST['itemname'],'category'=>$_POST['category']));
+            if($checkIte->rowCount() > 0){
+                $updateCart = $database->connection->prepare("update cart set size=:size,crust=:crust,sauce=:sauce,cheese=:cheese,quantity=:quantity,price=:price,timestamp=:timestamp where user_id=:user_id and item_name=:item_name and category=:category");
+                $updateCart->execute(array('size'=>$_POST['size'],'crust'=>$_POST['crust'],'sauce'=>$_POST['sauce'],'cheese'=>$_POST['cheese'],'quantity'=>$_POST['quantity'],'price'=>$cart_array['price'],'timestamp'=>time(),'user_id'=>$_SESSION['userid'],'item_name'=>$_POST['itemname'],'category'=>$_POST['category']));
+            }
+            else {
+                $updCart = $database->connection->prepare("insert into cart values (NULL,:user_id,:category,:item_name,:size,:crust,:sauce,:cheese,:quantity,:price,:timestamp)");
+                $updCart->execute($cart_array);
+            }
         }
     }
 }
